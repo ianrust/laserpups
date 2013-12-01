@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <title>LASERPUPS</title>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+        <script type="text/javascript">
+
+        	var pan = 1500
+        	var tilt = 1500
+            // send the input to the cgi script
+            // note: sending 3x the input for every keypress, to make the movement smoother
+            var submitInput = function(pinput,tinput) {
+                $.post("/cgi-bin/query.py?pan=" + pinput+"&tilt="+tinput);
+            };
+            
+            // submit input when someone presses a key down
+            $(document).keydown(function(event) {
+                console.log(event.keyCode);
+                switch(event.keyCode) {
+                  case 37:
+                    pan=pan+50
+                    break;
+                  case 39:
+                    pan=pan-50
+                    break;
+                  case 38:
+                    tilt=tilt+50
+                    break;
+                  case 40:
+                    tilt=tilt-50
+                    break;
+                  default:
+                }
+                submitInput(pan.toString(),tilt.toString())
+            });
+        </script>
+        <style type="text/css">
+        table tr, table td {
+            border: 1px solid black;
+            padding: 5px;
+            width: 25px;
+            height: 35px;
+            text-align: center;
+        }
+        table {
+            float: left;
+            margin: 5px;
+        }
+        </style>
+    </head>
+    <body>
+        <h1>LASERPUPS</h1>
+        <img src="http://10.0.1.13:8090/?action=stream"></img>
+        <div>
+        <table>
+          <tr>
+            <td></td>
+            <td>UP</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>LEFt</td>
+            <td>r</td>
+            <td>RIGHT</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>DOWN</td>
+            <td></td>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <td></td>
+            <td>e</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>s</td>
+            <td>r</td>
+            <td>d</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>x</td>
+            <td></td>
+          </tr>
+        </table>
+        </div>
+        <div style="clear:left"><br/>todo: add security</div>
+    </body>
+</html>
